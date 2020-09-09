@@ -1,0 +1,23 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.Modularity;
+
+namespace OrderPullService.EntityFrameworkCore
+{
+    [DependsOn(
+        typeof(OrderPullServiceDomainModule),
+        typeof(AbpEntityFrameworkCoreModule)
+    )]
+    public class OrderPullServiceEntityFrameworkCoreModule : AbpModule
+    {
+        public override void ConfigureServices(ServiceConfigurationContext context)
+        {
+            context.Services.AddAbpDbContext<OrderPullServiceDbContext>(options =>
+            {
+                /* Add custom repositories here. Example:
+                 * options.AddRepository<Question, EfCoreQuestionRepository>();
+                 */
+            });
+        }
+    }
+}

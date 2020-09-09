@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>OrderPullService</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Http.Client" Version="3.1.0" />
+    <ProjectReference Include="..\OrderPullService.Application.Contracts\OrderPullService.Application.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>
