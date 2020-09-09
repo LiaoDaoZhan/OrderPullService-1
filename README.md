@@ -1,16 +1,19 @@
 # OrderPullService
 OMS订单拉取服务
-# 测试说明
 
 ## 项目结构说明
 ### 主要项目 src
-OrderPullService.Domain 数据库实体对象
-OrderPullService.EntityFrameworkCore 数据库Ef的访问支持
-OrderPullService.HttpApi 提供对外访问的api 暂时不用处理
-OrderPullService.Application.Contracts 定义接口与DTO输出的格式
-*（重要）OrderPullService.Application 标准接口的具体实现 里面含有各大平台的请求内容
+
+ - OrderPullService.Domain 数据库实体对象
+ - OrderPullService.EntityFrameworkCore 数据库Ef的访问支持
+ - OrderPullService.HttpApi 提供对外访问的api 暂时不用处理
+ - OrderPullService.Application.Contracts 定义接口与DTO输出的格式
+ - *（重要）OrderPullService.Application 标准接口的具体实现 里面含有各大平台的请求内容
+
 ### 测试项目 test
 OrderPullService.Application.Tests 关于接口的测试内容，具体使用方式见下面
+
+# 测试说明
 
 **多个店铺的测试**
 
