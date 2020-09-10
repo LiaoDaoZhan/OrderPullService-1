@@ -10,7 +10,7 @@ using Volo.Abp.Application.Dtos;
 namespace OrderPullService.SnService
 {
     [RemoteService(IsEnabled = false, IsMetadataEnabled = false)]//禁用api方式访问
-    class SnTradeOrderAppService : OrderPullServiceAppService, ITradeOrderAppService
+    public class SnTradeOrderAppService : OrderPullServiceAppService, ITradeOrderAppService
     {
         public Task<OrderTradeOutput> GetAsync(string id)
         {

@@ -26,6 +26,7 @@ namespace OrderPullService
 
         public async Task<PagedResultDto<OrderTradeGetListOutput>> GetListAsync(TradeOrderGetListInput input)
         {
+            
             return null;
             //IJdClient client = new DefaultJdClient(CurrentShop.ApiUrl, CurrentShop.AppKey, CurrentShop.AppSecret);
             //PopOrderSearchRequest req = ObjectMapper.Map<TradeOrderGetListInput, PopOrderSearchRequest>(input);

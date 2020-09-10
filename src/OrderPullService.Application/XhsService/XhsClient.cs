@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OrderPullService;
 using OrderPullService.CurrentShop;
+using OrderPullService.Extensions;
 
 namespace OrderPullService.XhsService
 {
