@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 
 namespace OrderPullService.EntityFrameworkCore
 {
@@ -38,6 +39,32 @@ namespace OrderPullService.EntityFrameworkCore
                 b.HasIndex(q => q.CreationTime);
             });
             */
+
+            builder.Entity<Shop>(b =>
+            {
+                b.ToTable(options.TablePrefix + "Shops", options.Schema);
+                b.ConfigureFullAuditedAggregateRoot();
+            });
+
+            //builder.Entity<ShopPlatform>(b =>
+            //{
+            //    b.ToTable(options.TablePrefix + "ShopPlatforms", options.Schema);
+            //    //b.ConfigureFullAuditedAggregateRoot();
+            //});
+
+            builder.Entity<Trade>(b =>
+            {
+                b.ToTable(options.TablePrefix + "Trades", options.Schema);
+                b.ConfigureFullAuditedAggregateRoot();
+
+            });
+
+            builder.Entity<TradeDetail>(b =>
+            {
+                b.ToTable(options.TablePrefix + "TradeDetails", options.Schema);
+                b.ConfigureFullAuditedAggregateRoot();
+
+            });
         }
     }
 }

@@ -40,7 +40,7 @@ namespace OrderPullService.CurrentShop
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public IDisposable Change(Guid id, string name = null);
+        public IDisposable ChangeAsync(Guid id);
         /// <summary>
         /// 更改店铺信息
         /// </summary>
@@ -50,6 +50,6 @@ namespace OrderPullService.CurrentShop
         /// <param name="AppSecret"></param>
         /// <param name="AppSessionKey"></param>
         /// <returns></returns>
-        public IDisposable Change(Guid id, string name, string AppKey, string AppSecret, string AppSessionKey);
+        public IDisposable Change(Guid id,  string name, ShopPlatformType platform, string AppKey, string AppSecret, string AppSessionKey);
     }
 }

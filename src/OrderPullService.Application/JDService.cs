@@ -1,4 +1,5 @@
-﻿using OrderPullService.TradeOrder;
+﻿using OrderPullService.CurrentShop;
+using OrderPullService.TradeOrder;
 using OrderPullService.TradeOrder.Dto;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace OrderPullService
     /// </summary>
     public class JdTradeOrderAppService : OrderPullServiceAppService, ITradeOrderAppService
     {
+        public ICurrentShop CurrentShop { get; set; }
         public async Task<OrderTradeOutput> GetAsync(string id)
         {
             return null;

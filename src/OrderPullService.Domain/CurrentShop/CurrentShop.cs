@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Volo.Abp;
+using Volo.Abp.Threading;
 
 namespace OrderPullService.CurrentShop
 {
@@ -10,6 +12,13 @@ namespace OrderPullService.CurrentShop
     /// </summary>
     public class CurrentShop : ICurrentShop, Volo.Abp.DependencyInjection.ITransientDependency
     {
+        protected IShopRepository ShopRepository { get; }
+
+        public CurrentShop(IShopRepository shopRepository)
+        {
+            ShopRepository = shopRepository;
+        }
+
 #if SANBOX
       public string ApiUrl => "http://gw.api.tbsandbox.com/router/rest"; 
 #else
@@ -23,7 +32,7 @@ namespace OrderPullService.CurrentShop
         /// <summary>
         /// 第三方平台
         /// </summary>
-        public string Platform => _currentShopAccessor.Current.Platform;
+        public ShopPlatformType Platform => _currentShopAccessor.Current.Platform;
 
         public string AppKey => _currentShopAccessor.Current.AppKey;
 
@@ -40,27 +49,33 @@ namespace OrderPullService.CurrentShop
             _currentShopAccessor = currentShopAccessor;
         }
 
-        public IDisposable Change(Guid id, string name = null)
-        {
-            return SetCurrentShop(id, name);
-        }
-
-        public IDisposable SetCurrentShop(Guid id, string name = null)
+        public IDisposable ChangeAsync(Guid id)
         {
             //获取新的店铺key和秘钥
             var parentScope = _currentShopAccessor.Current;
-            _currentShopAccessor.Current = new ShopInfo(id, name);
+            _currentShopAccessor.Current = AsyncHelper.RunSync(() => ShopRepository.FindShopInfoAsync(id));
             return new DisposeAction(() =>
             {
                 _currentShopAccessor.Current = parentScope;
             });
         }
 
-        public IDisposable Change(Guid id, string name, string appKey, string appSecret, string appSessionKey)
+        //public IDisposable SetCurrentShop(Guid id, string name = null)
+        //{
+        //    //获取新的店铺key和秘钥
+        //    var parentScope = _currentShopAccessor.Current;
+        //    _currentShopAccessor.Current = new ShopInfo(id, name);
+        //    return new DisposeAction(() =>
+        //    {
+        //        _currentShopAccessor.Current = parentScope;
+        //    });
+        //}
+
+        public IDisposable Change(Guid id, string name, ShopPlatformType platform, string appKey, string appSecret, string appSessionKey)
         {
             //获取新的店铺key和秘钥
             var parentScope = _currentShopAccessor.Current;
-            _currentShopAccessor.Current = new ShopInfo(id, name, appKey, appSecret, appSessionKey);
+            _currentShopAccessor.Current = new ShopInfo(id, name, platform, appKey, appSecret, appSessionKey);
             return new DisposeAction(() =>
             {
                 _currentShopAccessor.Current = parentScope;

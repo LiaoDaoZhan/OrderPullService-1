@@ -1,4 +1,5 @@
-﻿using Volo.Abp.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 
 namespace OrderPullService.EntityFrameworkCore
@@ -9,5 +10,9 @@ namespace OrderPullService.EntityFrameworkCore
         /* Add DbSet for each Aggregate Root here. Example:
          * DbSet<Question> Questions { get; }
          */
+        DbSet<Shop> Shops { get; }
+        DbSet<Trade> Trades { get; }
+
+        DbSet<TradeDetail> TradeDetails { get; }
     }
 }

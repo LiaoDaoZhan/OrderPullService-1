@@ -17,6 +17,12 @@ namespace OrderPullService.EntityFrameworkCore
 
         }
 
+        public DbSet<Shop> Shops { get; set; }
+
+        public DbSet<Trade> Trades { get; set; }
+
+        public DbSet<TradeDetail> TradeDetails { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

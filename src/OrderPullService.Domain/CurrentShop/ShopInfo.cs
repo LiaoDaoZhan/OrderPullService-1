@@ -17,18 +17,19 @@ namespace OrderPullService.CurrentShop
             Id = id;
             Name = name;
         }
-        public ShopInfo(Guid id, string name, string appKey, string appSecret, string appSessionKey)
+        public ShopInfo(Guid id, string name, ShopPlatformType platform, string appKey, string appSecret, string appSessionKey)
         {
             Id = id;
             Name = name;
             AppKey = appKey;
             AppSecret = appSecret;
             AppSessionKey = appSessionKey;
+            Platform = platform;
         }
 
         public string Name { get; set; }
 
-        public string Platform { get; set; }
+        public ShopPlatformType Platform { get; set; }
 
         public Guid Id { get; set; }
 

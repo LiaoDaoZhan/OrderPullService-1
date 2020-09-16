@@ -6,7 +6,8 @@ namespace OrderPullService.EntityFrameworkCore
 {
     [DependsOn(
         typeof(OrderPullServiceDomainModule),
-        typeof(AbpEntityFrameworkCoreModule)
+        typeof(AbpEntityFrameworkCoreModule),
+        typeof(Volo.Abp.TenantManagement.EntityFrameworkCore.AbpTenantManagementEntityFrameworkCoreModule)
     )]
     public class OrderPullServiceEntityFrameworkCoreModule : AbpModule
     {
@@ -17,6 +18,13 @@ namespace OrderPullService.EntityFrameworkCore
                 /* Add custom repositories here. Example:
                  * options.AddRepository<Question, EfCoreQuestionRepository>();
                  */
+                options.AddRepository<Shop, EfCoreShopRepository>();
+            });
+
+            Configure<AbpDbContextOptions>(options =>
+            {
+                options.UseSqlServer();
+
             });
         }
     }
