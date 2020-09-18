@@ -22,4 +22,10 @@
     <ProjectReference Include="..\OrderPullService.Domain\OrderPullService.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="topsdk-net-core">
+      <HintPath>bin\topsdk-net-core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
