@@ -14,9 +14,10 @@ namespace OrderPullService.CurrentShop
     {
         protected IShopRepository ShopRepository { get; }
 
-        public CurrentShop(IShopRepository shopRepository)
+        public CurrentShop(IShopRepository shopRepository, ICurrentShopAccessor currentShopAccessor)
         {
             ShopRepository = shopRepository;
+            _currentShopAccessor = currentShopAccessor;
         }
 
 #if SANBOX
@@ -44,10 +45,7 @@ namespace OrderPullService.CurrentShop
 
         private readonly ICurrentShopAccessor _currentShopAccessor;
 
-        public CurrentShop(ICurrentShopAccessor currentShopAccessor)
-        {
-            _currentShopAccessor = currentShopAccessor;
-        }
+       
 
         public IDisposable ChangeAsync(Guid id)
         {

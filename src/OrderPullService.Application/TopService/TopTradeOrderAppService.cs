@@ -35,7 +35,7 @@ namespace OrderPullService.TopService
             TradesSoldIncrementGetResponse rsp = client.Execute(req, CurrentShop.AppSessionKey);
             //return rsp;
 
-            var result = new PagedResultDto<OrderTradeGetListOutput>(rsp.TotalResults, ObjectMapper.Map<IReadOnlyList<Trade>, List<OrderTradeGetListOutput>>((IReadOnlyList<Trade>)rsp.Trades));
+            var result = new PagedResultDto<OrderTradeGetListOutput>(rsp.TotalResults, ObjectMapper.Map<List<Top.Api.Domain.Trade>, List<OrderTradeGetListOutput>>(rsp.Trades));
             return result;
         }
         /// <summary>
@@ -47,10 +47,11 @@ namespace OrderPullService.TopService
         {
             ITopClient client = new DefaultTopClient(CurrentShop.ApiUrl, CurrentShop.AppKey, CurrentShop.AppSecret);
             TradeFullinfoGetRequest req = new TradeFullinfoGetRequest();
-            req.Tid = Convert.ToInt64(id);
-            //ObjectMapper.Map<OrderTradeGetInput, TradeFullinfoGetRequest>(id);
+
+            ObjectMapper.Map<OrderTradeGetInput, TradeFullinfoGetRequest>(new OrderTradeGetInput() { Id = id }, req);
+
             TradeFullinfoGetResponse rsp = client.Execute(req, CurrentShop.AppSessionKey);
-            var result = ObjectMapper.Map<Trade, OrderTradeOutput>(rsp.Trade);
+            var result = ObjectMapper.Map<Top.Api.Domain.Trade, OrderTradeOutput>(rsp.Trade);
             return result;
         }
         /// <summary>
