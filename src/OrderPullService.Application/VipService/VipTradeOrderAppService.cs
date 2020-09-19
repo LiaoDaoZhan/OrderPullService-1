@@ -13,7 +13,7 @@ namespace OrderPullService.VipService
     /// 唯品汇
     /// </summary>
     [RemoteService(IsEnabled = false, IsMetadataEnabled = false)]//禁用api方式访问
-    public class VipTradeOrderAppService : OrderPullServiceAppService, ITradeOrderAppService
+    public class VipTradeOrderAppService : OrderPullServiceAppService, IPullTradeOrderAppService
     {
         public Task<OrderTradeOutput> GetAsync(string id)
         {

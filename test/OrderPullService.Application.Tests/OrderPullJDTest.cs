@@ -14,7 +14,7 @@ namespace OrderPullService
     /// </summary>
     public class OrderPullJDTest : OrderPullServiceApplicationTestBase
     {
-        private ITradeOrderAppService _tradeOrderApplicationService;
+        private IPullTradeOrderAppService _tradeOrderApplicationService;
         private ICurrentShop _currentShop;
         public OrderPullJDTest()
         {

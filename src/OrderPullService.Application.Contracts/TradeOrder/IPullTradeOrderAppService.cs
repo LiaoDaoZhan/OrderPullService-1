@@ -11,7 +11,7 @@ namespace OrderPullService.TradeOrder
     /// <summary>
     /// 订单交易类 统一接口
     /// </summary>
-    public interface ITradeOrderAppService : IApplicationService
+    public interface IPullTradeOrderAppService : IApplicationService
     {
         /// <summary>
         /// 获取订单列表

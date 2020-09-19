@@ -13,7 +13,7 @@ namespace OrderPullService.XhsService
     /// 小红书
     /// </summary>
     [RemoteService(IsEnabled = false, IsMetadataEnabled = false)]//禁用api方式访问
-    public class XhsTradeOrderAppService : OrderPullServiceAppService, ITradeOrderAppService
+    public class XhsTradeOrderAppService : OrderPullServiceAppService, IPullTradeOrderAppService
     {
         public Task<OrderTradeOutput> GetAsync(string id)
         {

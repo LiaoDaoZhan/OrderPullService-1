@@ -18,6 +18,7 @@ namespace OrderPullService
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             context.Services.AddAutoMapperObjectMapper<OrderPullServiceApplicationModule>();
+
             Configure<AbpAutoMapperOptions>(options =>
             {
                 options.AddMaps<OrderPullServiceApplicationModule>(validate: true);

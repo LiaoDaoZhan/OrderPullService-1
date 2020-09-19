@@ -10,7 +10,7 @@ using Volo.Abp.Application.Dtos;
 namespace OrderPullService.LaZaDaService
 {
     [RemoteService(IsEnabled = false, IsMetadataEnabled = false)]//禁用api方式访问
-    public class LaZaDaTradeOrderAppService : OrderPullServiceAppService, ITradeOrderAppService
+    public class LaZaDaTradeOrderAppService : OrderPullServiceAppService, IPullTradeOrderAppService
     {
         public Task<OrderTradeOutput> GetAsync(string id)
         {

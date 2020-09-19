@@ -350,6 +350,8 @@ namespace OrderPullService.TradeOrder.Dto
         /// </summary>
         public int? Vendor_id_vip { get; set; }
 
+        public List<TradeDetailDto> TradeDetails { get; set; }
+
         /// <summary>
         /// 扩展数据
         /// </summary>

@@ -17,7 +17,7 @@ namespace OrderPullService.TopService
     /// 淘宝类交易订单
     /// </summary>
     [RemoteService(IsEnabled = false, IsMetadataEnabled = false)]//禁用api方式访问
-    public class TopTradeOrderAppService : OrderPullServiceAppService, ITradeOrderAppService
+    public class TopTradeOrderAppService : OrderPullServiceAppService, IPullTradeOrderAppService
     {
         //private ICurrentShop CurrentShop { get; set; }
         /// <summary>

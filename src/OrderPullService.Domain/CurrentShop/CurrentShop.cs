@@ -47,7 +47,7 @@ namespace OrderPullService.CurrentShop
 
        
 
-        public IDisposable ChangeAsync(Guid id)
+        public IDisposable Change(Guid id)
         {
             //获取新的店铺key和秘钥
             var parentScope = _currentShopAccessor.Current;

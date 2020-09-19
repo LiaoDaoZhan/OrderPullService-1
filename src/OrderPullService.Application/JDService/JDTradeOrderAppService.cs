@@ -12,7 +12,7 @@ namespace OrderPullService
     /// <summary>
     /// 京东交易类订单
     /// </summary>
-    public class JdTradeOrderAppService : OrderPullServiceAppService, ITradeOrderAppService
+    public class JdTradeOrderAppService : OrderPullServiceAppService, IPullTradeOrderAppService
     {
         public ICurrentShop CurrentShop { get; set; }
         public async Task<OrderTradeOutput> GetAsync(string id)
@@ -28,7 +28,7 @@ namespace OrderPullService
 
         public async Task<PagedResultDto<OrderTradeGetListOutput>> GetListAsync(TradeOrderGetListInput input)
         {
-            
+
             return null;
             //IJdClient client = new DefaultJdClient(CurrentShop.ApiUrl, CurrentShop.AppKey, CurrentShop.AppSecret);
             //PopOrderSearchRequest req = ObjectMapper.Map<TradeOrderGetListInput, PopOrderSearchRequest>(input);
