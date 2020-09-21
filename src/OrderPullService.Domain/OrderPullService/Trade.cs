@@ -8,13 +8,17 @@ namespace OrderPullService
     /// <summary>
     /// 交易订单
     /// </summary>
-    public class Trade : FullAuditedAggregateRoot<Guid>
+    public class Trade : FullAuditedAggregateRoot<Guid>, Volo.Abp.MultiTenancy.IMultiTenant
     {
+        /// <summary>
+        /// 交易订单原始Id
+        /// </summary>
         public string OriTradeId { get; set; }
         /// <summary>
+        ///     交易处理状态
         ///  //F_States 1:未下单 2:已下单 3:交易/订单数据异常 5：状态异常 6：未知
         /// </summary>
-        public string SellStates { get; set; }
+        public TradeProcessingStatus ProcessingStatus { get; set; }
 
         /// <summary>
         /// 店铺ID
@@ -24,10 +28,7 @@ namespace OrderPullService
         /// 卖家昵称
         /// </summary>
         public string SellerNick { get; set; }
-        /// <summary>
-        /// 商品图片绝对途径
-        /// </summary>
-        public string PicPath { get; set; }
+        
         /// <summary>
         /// 实付金额。精确到2位小数;单位:元。如:200.07，表示:200元7分
         /// </summary>
@@ -126,29 +127,13 @@ namespace OrderPullService
         public string Type { get; set; }
 
         /// <summary>
-        /// 商品价格。精确到2位小数；单位：元。如：200.07，表示：200元7分
-        /// </summary>
-        public string Price { get; set; }
-
-        /// <summary>
-        /// 商品金额（商品价格乘以数量的总金额）。精确到2位小数;单位:元。如:200.07，表示:200元7分
-        /// </summary>
-        public string TotalFee { get; set; }
-
-        /// <summary>
-        /// 交易创建时间。格式:yyyy-MM-dd HH:mm:ss
-        /// </summary>
-        [Obsolete("将会删除提供扩展方式")]
-        public string Created { get; set; }
-
-        /// <summary>
         /// 付款时间。格式:yyyy-MM-dd HH:mm:ss。订单的付款时间即为物流订单的创建时间。
         /// </summary>
         public DateTime? PayTime { get; set; }
-        /// <summary>
-        /// 交易修改时间(用户对订单的任何修改都会更新此字段)。格式:yyyy-MM-dd HH:mm:ss
-        /// </summary>
-        public string Modified { get; set; }
+        ///// <summary>
+        ///// 交易修改时间(用户对订单的任何修改都会更新此字段)。格式:yyyy-MM-dd HH:mm:ss
+        ///// </summary>
+        //public string Modified { get; set; }
 
         /// <summary>
         /// 交易结束时间。交易成功时间(更新交易状态为成功的同时更新)/确认收货时间或者交易关闭时间 。格式:yyyy-MM-dd HH:mm:ss
@@ -239,16 +224,10 @@ namespace OrderPullService
         /// </summary>
         public string Source { get; set; }
 
-        public bool? EnabledMark { get; set; }
-        public string Description { get; set; }
+        //public bool? EnabledMark { get; set; }
+        //public string Description { get; set; }
 
-        public int? SortCode { get; set; }
-
-        /// <summary>
-        /// 返回的报文
-        /// </summary>
-        public string ReponseData { get; set; }
-
+        //public int? SortCode { get; set; }
 
         /// <summary>
         /// 时效服务身份，如tmallPromise代表天猫时效承诺
@@ -302,12 +281,10 @@ namespace OrderPullService
         /// </summary>
         public string GmtReceived { get; set; }
 
-
         /// <summary>
         /// 快递费用的佣金比例
         /// </summary>
         public string EscrowFeeEpxressRate { get; set; }
-
 
 
         /// <summary>
@@ -447,9 +424,16 @@ namespace OrderPullService
         /// </summary>
         public string RefundType { get; set; }
 
-        public string CancelRequestReason { get; set; }
-
+        /// <summary>
+        /// 交易明细
+        /// </summary>
         public virtual IList<TradeDetail> Details { get; set; }
+        /// <summary>
+        /// 交易优惠信息
+        /// </summary>
+        public virtual IList<TradePromotion> PromotionDetails { get; set; }
+
+        public Guid? TenantId {get;set;}
 
         public void SetId(Guid id)
         {

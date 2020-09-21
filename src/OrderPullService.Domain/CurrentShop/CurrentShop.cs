@@ -41,6 +41,8 @@ namespace OrderPullService.CurrentShop
 
         public string AppSessionKey => _currentShopAccessor.Current.AppSessionKey;
 
+        public Guid? TenantId => _currentShopAccessor.Current.TenantId;
+
         public virtual Guid Id => _currentShopAccessor.Current.Id;
 
         private readonly ICurrentShopAccessor _currentShopAccessor;

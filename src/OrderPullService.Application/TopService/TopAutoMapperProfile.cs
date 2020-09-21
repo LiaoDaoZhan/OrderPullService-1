@@ -28,7 +28,13 @@ namespace OrderPullService.TopService
 
             CreateMap<Top.Api.Domain.Trade, OrderTradeGetListOutput>(MemberList.None);
 
+            CreateMap<Top.Api.Domain.PromotionDetail, TradePromotion>(MemberList.None)
+                .ForMember(c => c.Id, c => c.Ignore())
+                //.ForMember(c => c.TradeOriId, c => c.MapFrom(d => d.Id))
+                ;
+
             CreateMap<Top.Api.Domain.Trade, Trade>(MemberList.None)
+                .ForMember(c=>c.OriTradeId,c=>c.MapFrom(d=>d.NumIid))
                 .ForMember(c => c.AdjustFee, c => c.MapFrom(d => d.AdjustFee))
                 .ForMember(c => c.BuyerFlag, c => c.MapFrom(d => d.BuyerFlag))
                 .ForMember(c => c.BuyerMemo, c => c.MapFrom(d => d.BuyerMemo))
@@ -36,6 +42,7 @@ namespace OrderPullService.TopService
                 .ForMember(c => c.BuyerNick, c => c.MapFrom(d => d.BuyerNick))
                 .ForMember(c => c.BuyerRate, c => c.MapFrom(d => d.BuyerRate))
                 .ForMember(c => c.Details, c => c.MapFrom(d => d.Orders))
+
                 //.ForMember(c=>c.CreationTime,c=>c.MapFrom(d=>d.Created))
                 //.ForMember(c=>c.Payment,c=>c.MapFrom(d=>d.Payment))
                 .AfterMap((input, output) =>

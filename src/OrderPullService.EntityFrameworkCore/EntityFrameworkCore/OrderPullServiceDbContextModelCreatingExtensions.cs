@@ -66,6 +66,13 @@ namespace OrderPullService.EntityFrameworkCore
                 b.ConfigureFullAuditedAggregateRoot();
                 b.Property(c => c.Status).HasConversion(c => c.ToString(), d => (TradeStatus)Enum.Parse(typeof(TradeStatus), d));
             });
+
+            builder.Entity<TradePromotion>(b =>
+            {
+                b.ToTable(options.TablePrefix + "TradePromotions", options.Schema);
+                b.ConfigureFullAuditedAggregateRoot();
+            });
+
         }
     }
 }

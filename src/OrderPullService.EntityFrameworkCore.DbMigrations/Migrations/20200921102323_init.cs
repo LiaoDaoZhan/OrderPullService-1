@@ -42,7 +42,8 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     City = table.Column<string>(nullable: true),
                     Area = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
-                    ReMark = table.Column<string>(nullable: true)
+                    ReMark = table.Column<string>(nullable: true),
+                    TenantId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -64,10 +65,9 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     DeleterId = table.Column<Guid>(nullable: true),
                     DeletionTime = table.Column<DateTime>(nullable: true),
                     OriTradeId = table.Column<string>(nullable: true),
-                    SellStates = table.Column<string>(nullable: true),
+                    ProcessingStatus = table.Column<int>(nullable: false),
                     ShopId = table.Column<Guid>(nullable: false),
                     SellerNick = table.Column<string>(nullable: true),
-                    PicPath = table.Column<string>(nullable: true),
                     Payment = table.Column<string>(nullable: true),
                     SellerRate = table.Column<bool>(nullable: false),
                     PostFee = table.Column<string>(nullable: true),
@@ -87,11 +87,7 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     Status = table.Column<string>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Type = table.Column<string>(nullable: true),
-                    Price = table.Column<string>(nullable: true),
-                    TotalFee = table.Column<string>(nullable: true),
-                    Created = table.Column<string>(nullable: true),
                     PayTime = table.Column<DateTime>(nullable: true),
-                    Modified = table.Column<string>(nullable: true),
                     EndTime = table.Column<DateTime>(nullable: true),
                     BuyerMessage = table.Column<string>(nullable: true),
                     BuyerMemo = table.Column<string>(nullable: true),
@@ -116,10 +112,6 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     IsInvoice = table.Column<bool>(nullable: true),
                     IsUse = table.Column<bool>(nullable: true),
                     Source = table.Column<string>(nullable: true),
-                    EnabledMark = table.Column<bool>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    SortCode = table.Column<int>(nullable: true),
-                    ReponseData = table.Column<string>(nullable: true),
                     TimingPromise = table.Column<string>(nullable: true),
                     EsTime = table.Column<string>(nullable: true),
                     PromiseService = table.Column<string>(nullable: true),
@@ -158,7 +150,7 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     RefundStatus = table.Column<string>(nullable: true),
                     RefundTime = table.Column<string>(nullable: true),
                     RefundType = table.Column<string>(nullable: true),
-                    CancelRequestReason = table.Column<string>(nullable: true)
+                    TenantId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -187,8 +179,6 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     BuyerLoginId = table.Column<string>(nullable: true),
                     RefundStatus = table.Column<string>(nullable: true),
                     OutId = table.Column<string>(nullable: true),
-                    SnapshotUrl = table.Column<string>(nullable: true),
-                    Snapshot = table.Column<string>(nullable: true),
                     TimeoutActionTim = table.Column<string>(nullable: true),
                     BuyerRate = table.Column<bool>(nullable: false),
                     SellerRate = table.Column<bool>(nullable: false),
@@ -202,22 +192,19 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     NumId = table.Column<string>(nullable: true),
                     ItemMealId = table.Column<string>(nullable: true),
                     SkuId = table.Column<string>(nullable: true),
-                    Num = table.Column<string>(nullable: true),
+                    Num = table.Column<long>(nullable: false),
                     OutSkuId = table.Column<string>(nullable: true),
                     OrderFrom = table.Column<string>(nullable: true),
-                    TotalFee = table.Column<string>(nullable: true),
-                    Payment = table.Column<string>(nullable: true),
-                    DiscountFee = table.Column<string>(nullable: true),
-                    AdjustFee = table.Column<string>(nullable: true),
+                    TotalFee = table.Column<decimal>(nullable: false),
+                    Payment = table.Column<decimal>(nullable: false),
+                    DiscountFee = table.Column<decimal>(nullable: false),
+                    AdjustFee = table.Column<decimal>(nullable: false),
                     SkuPropertiesName = table.Column<string>(nullable: true),
-                    EndTime = table.Column<string>(nullable: true),
-                    EnabledMark = table.Column<bool>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    SortCode = table.Column<int>(nullable: true),
-                    Discount = table.Column<string>(nullable: true),
-                    oPrice = table.Column<string>(nullable: true),
+                    EndTime = table.Column<DateTime>(nullable: false),
+                    Discount = table.Column<decimal>(nullable: true),
+                    oPrice = table.Column<decimal>(nullable: false),
                     EscrowFeeRate = table.Column<string>(nullable: true),
-                    EscrowFee = table.Column<string>(nullable: true),
+                    EscrowFee = table.Column<decimal>(nullable: true),
                     AfflicateFeeRate = table.Column<decimal>(nullable: true),
                     AfflicateFee = table.Column<decimal>(nullable: true),
                     TyingNum = table.Column<int>(nullable: true),
@@ -228,7 +215,9 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     PackAmount = table.Column<decimal>(nullable: true),
                     MailNoAmount = table.Column<decimal>(nullable: true),
                     OrdeActionAmount = table.Column<decimal>(nullable: true),
-                    PayTime = table.Column<DateTime>(nullable: true)
+                    PayTime = table.Column<DateTime>(nullable: true),
+                    TenantId = table.Column<Guid>(nullable: true),
+                    ShopId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -241,10 +230,45 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "OrderPullServiceTradePromotions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ExtraProperties = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(maxLength: 40, nullable: true),
+                    DiscountFee = table.Column<string>(nullable: true),
+                    GiftItemId = table.Column<string>(nullable: true),
+                    GiftItemName = table.Column<string>(nullable: true),
+                    GiftItemNum = table.Column<string>(nullable: true),
+                    TardeId = table.Column<Guid>(nullable: false),
+                    TradeOriId = table.Column<long>(nullable: false),
+                    PromotionDesc = table.Column<string>(nullable: true),
+                    PromotionId = table.Column<string>(nullable: true),
+                    PromotionName = table.Column<string>(nullable: true),
+                    TenantId = table.Column<Guid>(nullable: true),
+                    ShopId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderPullServiceTradePromotions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderPullServiceTradePromotions_OrderPullServiceTrades_TardeId",
+                        column: x => x.TardeId,
+                        principalTable: "OrderPullServiceTrades",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_OrderPullServiceTradeDetails_TradeId",
                 table: "OrderPullServiceTradeDetails",
                 column: "TradeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderPullServiceTradePromotions_TardeId",
+                table: "OrderPullServiceTradePromotions",
+                column: "TardeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -254,6 +278,9 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderPullServiceTradeDetails");
+
+            migrationBuilder.DropTable(
+                name: "OrderPullServiceTradePromotions");
 
             migrationBuilder.DropTable(
                 name: "OrderPullServiceTrades");

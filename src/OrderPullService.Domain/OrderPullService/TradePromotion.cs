@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using Volo.Abp.Domain.Entities;
+using Volo.Abp.MultiTenancy;
 
-namespace OrderPullService.TradeOrder.Dto
+namespace OrderPullService
 {
     /// <summary>
-    /// 优惠信息
+    /// 交易优惠信息
     /// </summary>
-    public class PromotionDetailDto
+    public class TradePromotion: AggregateRoot<Guid>,IMultiTenant
     {
         /// <summary>
         /// 优惠金额
@@ -25,7 +28,9 @@ namespace OrderPullService.TradeOrder.Dto
         /// 赠品数量
         /// </summary>
         public string GiftItemNum { get; set; }
-        
+
+        [ForeignKey(nameof(TardeId))]
+        public Trade Trade { get; set; }
         /// <summary>
         /// 交易Id
         /// </summary>
@@ -46,5 +51,18 @@ namespace OrderPullService.TradeOrder.Dto
         /// 活动名称
         /// </summary>
         public string PromotionName { get; set; }
+        /// <summary>
+        /// 租户
+        /// </summary>
+        public Guid? TenantId { get; set; }
+        /// <summary>
+        /// 店铺Id
+        /// </summary>
+        public Guid ShopId { get; set; }
+
+        public void SetId(Guid id)
+        {
+            Id = Id;
+        }
     }
 }

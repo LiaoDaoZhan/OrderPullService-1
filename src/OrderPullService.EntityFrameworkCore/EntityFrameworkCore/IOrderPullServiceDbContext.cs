@@ -14,5 +14,7 @@ namespace OrderPullService.EntityFrameworkCore
         DbSet<Trade> Trades { get; }
 
         DbSet<TradeDetail> TradeDetails { get; }
+
+        DbSet<TradePromotion> TradePromotions { get; }
     }
 }

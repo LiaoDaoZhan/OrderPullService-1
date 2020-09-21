@@ -44,6 +44,8 @@ namespace OrderPullService
 
                 // 结果批量导入
                 await _pullServiceDbContext.Trades.BulkInsertAsync(Trades);
+                // 优惠信息批量导入
+                await _pullServiceDbContext.TradePromotions.BulkInsertAsync(Trades.SelectMany(c => c.PromotionDetails));
                 // 明细批量导入
                 await _pullServiceDbContext.TradeDetails.BulkInsertAsync(Trades.SelectMany(c => c.Details));
                 
@@ -52,9 +54,10 @@ namespace OrderPullService
 
         protected virtual async Task ExecuteAsync(IPullTradeOrderService pullTradeOrderService)
         {
-            //var orderIds = await pullTradeOrderService.GetListAsync(new TradeOrder.Dto.TradeOrderGetListInput() { SkipCount=0,MaxResultCount=1});
-            var orderIds = new PagedResultDto<OrderTradeGetListOutput> {
-                Items=new List<OrderTradeGetListOutput>()
+            //var orderIds = await pullTradeOrderService.GetListAsync(new TradeOrder.Dto.TradeOrderGetListInput() { SkipCount = 0, MaxResultCount = 1 });
+            var orderIds = new PagedResultDto<OrderTradeGetListOutput>
+            {
+                Items = new List<OrderTradeGetListOutput>()
                 {
                  new OrderTradeGetListOutput(){ TradeId="1208621211133660394"}
                 }
@@ -83,14 +86,25 @@ namespace OrderPullService
                  {
                      var trade = await pullTradeOrderService.GetTradeAsync(item.TradeId);
                      trade.ShopId = CurrentShop.Id;
+                     trade.TenantId = CurrentTenant.Id;
                      trade.SetId(GuidGenerator.Create());
-                     
                      trade.CreationTime = DateTime.Now;
-                     trade.Details.ForAll(item =>
+
+                     trade.PromotionDetails.ForAll(promotion_detail =>
                      {
-                         item.TradeId = trade.Id;
-                         item.SetId(GuidGenerator.Create());
-                         item.CreationTime = DateTime.Now;
+                         promotion_detail.SetId(GuidGenerator.Create());
+                         promotion_detail.ShopId = CurrentShop.Id;
+                         promotion_detail.TenantId = CurrentTenant.Id;
+                         promotion_detail.TardeId = trade.Id;
+                          //item.CreationTime = DateTime.Now;
+                     });
+                     trade.Details.ForAll(detail =>
+                     {
+                         detail.ShopId = CurrentShop.Id;
+                         detail.TenantId = CurrentTenant.Id;
+                         detail.TradeId = trade.Id;
+                         detail.SetId(GuidGenerator.Create());
+                         detail.CreationTime = DateTime.Now;
                      });
                      //var trade = ObjectMapper.Map<OrderTradeOutput, Trade>(tradeDetail);
 
