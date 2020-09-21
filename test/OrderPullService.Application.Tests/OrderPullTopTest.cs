@@ -12,11 +12,11 @@ namespace OrderPullService
 {
     public class OrderPullTopTest : OrderPullServiceApplicationTestBase
     {
-        private IPullTradeOrderAppService _tradeOrderApplicationService;
+        private IPullTradeOrderService _tradeOrderApplicationService;
         private ICurrentShop _currentShop;
         public OrderPullTopTest()
         {
-            _tradeOrderApplicationService = GetRequiredService<TopTradeOrderAppService>();
+            _tradeOrderApplicationService = GetRequiredService<TopTradeOrderService>();
             _currentShop = GetRequiredService<ICurrentShop>();
         }
 

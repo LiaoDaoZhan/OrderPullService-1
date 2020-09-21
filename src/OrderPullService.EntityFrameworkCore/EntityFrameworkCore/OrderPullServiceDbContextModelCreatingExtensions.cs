@@ -56,6 +56,7 @@ namespace OrderPullService.EntityFrameworkCore
             {
                 b.ToTable(options.TablePrefix + "Trades", options.Schema);
                 b.ConfigureFullAuditedAggregateRoot();
+                b.Property(c => c.Status).HasConversion(c => c.ToString(), d => (TradeStatus)Enum.Parse(typeof(TradeStatus), d));
 
             });
 
@@ -63,7 +64,7 @@ namespace OrderPullService.EntityFrameworkCore
             {
                 b.ToTable(options.TablePrefix + "TradeDetails", options.Schema);
                 b.ConfigureFullAuditedAggregateRoot();
-
+                b.Property(c => c.Status).HasConversion(c => c.ToString(), d => (TradeStatus)Enum.Parse(typeof(TradeStatus), d));
             });
         }
     }

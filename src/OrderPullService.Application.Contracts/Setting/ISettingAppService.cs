@@ -6,7 +6,7 @@ using Volo.Abp.Application.Services;
 
 namespace OrderPullService.Setting
 {
-    public interface IOrderPullServiceSettingAppService : IApplicationService
+    public interface ISettingAppService : IApplicationService
     {
         Task<OrderPullServiceSettingDto> GetAsync();
 

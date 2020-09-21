@@ -14,11 +14,11 @@ namespace OrderPullService
     /// </summary>
     public class OrderPullJDTest : OrderPullServiceApplicationTestBase
     {
-        private IPullTradeOrderAppService _tradeOrderApplicationService;
+        private IPullTradeOrderService _tradeOrderApplicationService;
         private ICurrentShop _currentShop;
         public OrderPullJDTest()
         {
-            _tradeOrderApplicationService = GetRequiredService<JdTradeOrderAppService>();
+            _tradeOrderApplicationService = GetRequiredService<JDTradeOrderService>();
             _currentShop = GetRequiredService<ICurrentShop>();
         }
 

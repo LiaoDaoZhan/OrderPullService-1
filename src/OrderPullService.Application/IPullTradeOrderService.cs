@@ -1,7 +1,9 @@
-﻿using System;
+﻿using OrderPullService.TradeOrder.Dto;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp.Application.Dtos;
 
 namespace OrderPullService
 {
@@ -12,12 +14,14 @@ namespace OrderPullService
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        //Task<PagedResultDto<OrderTradeGetListOutput>> GetListAsync(TradeOrderGetListInput input);
+        Task<PagedResultDto<OrderTradeGetListOutput>> GetListAsync(TradeOrderGetListInput input);
         /// <summary>
         /// 获取订单交易明细
         /// </summary>
         /// <param name="id">交易ID</param>
         /// <returns></returns>
-        //Task<OrderTradeOutput> GetAsync(string id);
+        Task<OrderTradeOutput> GetAsync(string id);
+
+        Task<Trade> GetTradeAsync(string id);
     }
 }

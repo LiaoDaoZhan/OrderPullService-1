@@ -19,7 +19,8 @@ namespace OrderPullService.TopService
                 .AfterMap((input, request) =>
                 {
                     request.Fields = "tid";
-                    request.PageNo = Convert.ToInt64(Math.Round((input.SkipCount / input.MaxResultCount) * 1m, 0));
+                    var pageNo = Convert.ToInt64(Math.Round((input.SkipCount / input.MaxResultCount) * 1m, 0));
+                    request.PageNo = pageNo+1;
                     request.PageSize = input.MaxResultCount;
                     ///是否存在下一页
                     //request.UseHasNext = true;
@@ -27,7 +28,16 @@ namespace OrderPullService.TopService
 
             CreateMap<Top.Api.Domain.Trade, OrderTradeGetListOutput>(MemberList.None);
 
-            CreateMap<Top.Api.Domain.Trade, OrderTradeOutput>(MemberList.None)
+            CreateMap<Top.Api.Domain.Trade, Trade>(MemberList.None)
+                .ForMember(c => c.AdjustFee, c => c.MapFrom(d => d.AdjustFee))
+                .ForMember(c => c.BuyerFlag, c => c.MapFrom(d => d.BuyerFlag))
+                .ForMember(c => c.BuyerMemo, c => c.MapFrom(d => d.BuyerMemo))
+                .ForMember(c => c.BuyerMessage, c => c.MapFrom(d => d.BuyerMessage))
+                .ForMember(c => c.BuyerNick, c => c.MapFrom(d => d.BuyerNick))
+                .ForMember(c => c.BuyerRate, c => c.MapFrom(d => d.BuyerRate))
+                .ForMember(c => c.Details, c => c.MapFrom(d => d.Orders))
+                //.ForMember(c=>c.CreationTime,c=>c.MapFrom(d=>d.Created))
+                //.ForMember(c=>c.Payment,c=>c.MapFrom(d=>d.Payment))
                 .AfterMap((input, output) =>
                 {
                     // 将当前对象存储
@@ -35,7 +45,20 @@ namespace OrderPullService.TopService
                 })
                 ;
 
-            CreateMap<Top.Api.Domain.Order, TradeDetailDto>(MemberList.None)
+            //CreateMap<OrderTradeOutput, Trade>(MemberList.None)
+            //    .ForMember(c=>c.Details,c=>c.MapFrom(d=>d.TradeDetails))
+            //     .AfterMap((input, output) =>
+            //     {
+            //         // 将当前对象存储
+            //         if (!output.HasProperty("trade"))
+            //         {
+            //             output.SetProperty("trade", input.GetProperty("trade"));
+            //         }
+            //     })
+            //    ;
+
+            CreateMap<Top.Api.Domain.Order, TradeDetail>(MemberList.None)
+                
                 .AfterMap((input, output) =>
                 {
                     // 将当前对象存储

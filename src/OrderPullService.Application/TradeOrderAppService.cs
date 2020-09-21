@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AutoMapper.Internal;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OrderPullService.EntityFrameworkCore;
 using OrderPullService.TopService;
@@ -14,11 +15,15 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp;
+using Volo.Abp.Application.Dtos;
 using Volo.Abp.Threading;
 
 namespace OrderPullService
 {
-    public class TradeOrderAppService : OrderPullServiceAppService
+    [RemoteService(true)]
+
+    public class TradeOrderAppService : OrderPullServiceAppService, ITradeOrderAppService
     {
         private OrderPullServiceDbContext _pullServiceDbContext;
         public TradeOrderAppService(OrderPullServiceDbContext pullServiceDbContext)
@@ -33,18 +38,27 @@ namespace OrderPullService
         {
             using (CurrentShop.Change(id))
             {
-                IPullTradeOrderAppService pullTradeOrderAppService = PullTradeOrderFactory();
+                IPullTradeOrderService pullTradeOrderService = PullTradeOrderFactory();
 
-                await ExecuteAsync(pullTradeOrderAppService);
+                await ExecuteAsync(pullTradeOrderService);
 
                 // 结果批量导入
                 await _pullServiceDbContext.Trades.BulkInsertAsync(Trades);
+                // 明细批量导入
+                await _pullServiceDbContext.TradeDetails.BulkInsertAsync(Trades.SelectMany(c => c.Details));
+                
             }
         }
 
-        protected virtual async Task ExecuteAsync(IPullTradeOrderAppService pullTradeOrderAppService)
+        protected virtual async Task ExecuteAsync(IPullTradeOrderService pullTradeOrderService)
         {
-            var orderIds = await pullTradeOrderAppService.GetListAsync(new TradeOrder.Dto.TradeOrderGetListInput());
+            //var orderIds = await pullTradeOrderService.GetListAsync(new TradeOrder.Dto.TradeOrderGetListInput() { SkipCount=0,MaxResultCount=1});
+            var orderIds = new PagedResultDto<OrderTradeGetListOutput> {
+                Items=new List<OrderTradeGetListOutput>()
+                {
+                 new OrderTradeGetListOutput(){ TradeId="1208621211133660394"}
+                }
+            };
 
             // 遇到错误 重试3次
             var retry = Policy.Handle<Exception>().RetryAsync(3);
@@ -67,20 +81,29 @@ namespace OrderPullService
                   .WrapAsync(retry)
                   .ExecuteAsync(async () =>
                  {
-                     var tradeDetail = await pullTradeOrderAppService.GetAsync(item.TradeId);
-
-                     var trade = ObjectMapper.Map<OrderTradeOutput, Trade>(tradeDetail);
+                     var trade = await pullTradeOrderService.GetTradeAsync(item.TradeId);
+                     trade.ShopId = CurrentShop.Id;
+                     trade.SetId(GuidGenerator.Create());
+                     
+                     trade.CreationTime = DateTime.Now;
+                     trade.Details.ForAll(item =>
+                     {
+                         item.TradeId = trade.Id;
+                         item.SetId(GuidGenerator.Create());
+                         item.CreationTime = DateTime.Now;
+                     });
+                     //var trade = ObjectMapper.Map<OrderTradeOutput, Trade>(tradeDetail);
 
                      Trades.Add(trade);
                  });
             });
         }
 
-        protected virtual IPullTradeOrderAppService PullTradeOrderFactory()
+        protected virtual IPullTradeOrderService PullTradeOrderFactory()
         {
             if (CurrentShop.Platform == ShopPlatformType.TMall||CurrentShop.Platform==ShopPlatformType.TaoBao)
             {
-                return ServiceProvider.GetRequiredService<TopTradeOrderAppService>();
+                return ServiceProvider.GetRequiredService<TopTradeOrderService>();
             }
             else
             {

@@ -406,10 +406,8 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     b.Property<int?>("StateNum")
                         .HasColumnType("int");
 
-                    b.Property<string>("Statu_CN")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tid")
@@ -521,6 +519,9 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<string>("IsShShip")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ItemMealId")
                         .HasColumnType("nvarchar(max)");
 
@@ -602,6 +603,7 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TimeoutActionTim")
@@ -627,9 +629,6 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
 
                     b.Property<decimal?>("YJCost")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("is_sh_ship")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("oPrice")
                         .HasColumnType("nvarchar(max)");

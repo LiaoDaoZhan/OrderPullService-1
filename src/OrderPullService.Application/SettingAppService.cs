@@ -8,10 +8,10 @@ using Volo.Abp.SettingManagement;
 
 namespace OrderPullService
 {
-    public class OrderPullServiceSettingAppService : ApplicationService, IOrderPullServiceSettingAppService
+    public class SettingAppService : ApplicationService, ISettingAppService
     {
         private ISettingManager _settingManager;
-        public OrderPullServiceSettingAppService(ISettingManager settingManager)
+        public SettingAppService(ISettingManager settingManager)
         {
             _settingManager = settingManager;
         }

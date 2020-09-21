@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OrderPullService.OrderPullService
+namespace OrderPullService
 {
     /// <summary>
     /// 交易号状态（和线上一致）
     /// </summary>
-    public enum TradeState
+    public enum TradeStatus
     {
         /// <summary>
         /// //等待买家付款

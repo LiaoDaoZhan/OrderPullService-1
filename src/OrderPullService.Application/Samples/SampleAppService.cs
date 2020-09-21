@@ -10,11 +10,12 @@ namespace OrderPullService.Samples
             return Task.FromResult(
                 new SampleDto
                 {
-                    Value = 42
+                    Value = 43
                 }
             );
         }
 
+        
         [Authorize]
         public Task<SampleDto> GetAuthorizedAsync()
         {
