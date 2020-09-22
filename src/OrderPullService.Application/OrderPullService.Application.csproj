@@ -23,6 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="jos-sdk-net">
+      <HintPath>bin\jos-sdk-net.dll</HintPath>
+    </Reference>
+    <Reference Include="LazopSdk">
+      <HintPath>bin\LazopSdk.dll</HintPath>
+    </Reference>
     <Reference Include="topsdk-net-core">
       <HintPath>bin\topsdk-net-core.dll</HintPath>
     </Reference>
