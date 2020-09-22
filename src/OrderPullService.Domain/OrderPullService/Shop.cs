@@ -8,7 +8,7 @@ namespace OrderPullService
     /// <summary>
     /// 店铺信息
     /// </summary>
-    public class Shop : FullAuditedAggregateRoot<Guid>
+    public class Shop : FullAuditedAggregateRoot<Guid>, Volo.Abp.MultiTenancy.IMultiTenant
     {
         /// <summary>
         /// 店铺
@@ -81,6 +81,8 @@ namespace OrderPullService
         /// 备注
         /// </summary>
         public string ReMark { get; set; }
+
+        public Guid? TenantId { get; set; }
 
         ///// <summary>
         ///// 添加第三方平台信息

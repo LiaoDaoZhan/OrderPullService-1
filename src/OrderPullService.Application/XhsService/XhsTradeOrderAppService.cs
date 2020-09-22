@@ -13,7 +13,7 @@ namespace OrderPullService.XhsService
     /// 小红书
     /// </summary>
     [RemoteService(IsEnabled = false, IsMetadataEnabled = false)]//禁用api方式访问
-    public class XhsTradeOrderAppService : OrderPullServiceAppService, ITradeOrderAppService
+    public class XhsTradeOrderAppService : OrderPullServiceAppService, IPullTradeOrderService
     {
         public Task<OrderTradeOutput> GetAsync(string id)
         {
@@ -69,6 +69,11 @@ namespace OrderPullService.XhsService
             //output.TotalCount = trade.total_number;
             //output.Items = ObjectMapper.Map<List<Trade>, List<OrderTradeGetListOutput>>(trade.package_list);
             //return output;
+        }
+
+        public Task<global::OrderPullService.Trade> GetTradeAsync(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

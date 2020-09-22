@@ -8,13 +8,17 @@ namespace OrderPullService
     /// <summary>
     /// 交易订单
     /// </summary>
-    public class Trade : FullAuditedAggregateRoot<Guid>
+    public class Trade : FullAuditedAggregateRoot<Guid>, Volo.Abp.MultiTenancy.IMultiTenant
     {
+        /// <summary>
+        /// 交易订单原始Id
+        /// </summary>
         public string OriTradeId { get; set; }
         /// <summary>
+        ///     交易处理状态
         ///  //F_States 1:未下单 2:已下单 3:交易/订单数据异常 5：状态异常 6：未知
         /// </summary>
-        public string SellStates { get; set; }
+        public TradeProcessingStatus ProcessingStatus { get; set; }
 
         /// <summary>
         /// 店铺ID
@@ -24,10 +28,7 @@ namespace OrderPullService
         /// 卖家昵称
         /// </summary>
         public string SellerNick { get; set; }
-        /// <summary>
-        /// 商品图片绝对途径
-        /// </summary>
-        public string PicPath { get; set; }
+        
         /// <summary>
         /// 实付金额。精确到2位小数;单位:元。如:200.07，表示:200元7分
         /// </summary>
@@ -101,7 +102,7 @@ namespace OrderPullService
         /// <summary>
         /// 币种  空默认为RMB
         /// </summary>
-        public string Currency { get; set; }
+        public string Currency { get; set; } = "RMB";
 
         /// <summary>
         /// 商品数字编号
@@ -113,13 +114,7 @@ namespace OrderPullService
         /// =======
         /// 速卖通：PLACE_ORDER_SUCCESS:等待买家付款; IN_CANCEL:买家申请取消; WAIT_SELLER_SEND_GOODS:等待您发货; SELLER_PART_SEND_GOODS:部分发货; WAIT_BUYER_ACCEPT_GOODS:等待买家收货; FUND_PROCESSING:买卖家达成一致，资金处理中； IN_ISSUE:含纠纷中的订单; IN_FROZEN:冻结中的订单; WAIT_SELLER_EXAMINE_MONEY:等待您确认金额; RISK_CONTROL:订单处于风控24小时中，从买家在线支付完成后开始，持续24小时。 以上状态查询可分别做单独查询，不传订单状态查询订单信息不包含（FINISH，已结束订单状态） FINISH:已结束的订单，需单独查询。
         /// </summary>
-        public string Status { get; set; }
-
-
-        /// <summary>
-        /// 交易号状态的中文解释 
-        /// </summary>
-        public string Statu_CN { get; set; }
+        public TradeStatus Status { get; set; }
 
         /// <summary>
         /// 交易标题，以店铺名作为此标题的值。注:taobao.trades.get接口返回的Trade中的title是商品名称
@@ -132,28 +127,13 @@ namespace OrderPullService
         public string Type { get; set; }
 
         /// <summary>
-        /// 商品价格。精确到2位小数；单位：元。如：200.07，表示：200元7分
-        /// </summary>
-        public string Price { get; set; }
-
-        /// <summary>
-        /// 商品金额（商品价格乘以数量的总金额）。精确到2位小数;单位:元。如:200.07，表示:200元7分
-        /// </summary>
-        public string TotalFee { get; set; }
-
-        /// <summary>
-        /// 交易创建时间。格式:yyyy-MM-dd HH:mm:ss
-        /// </summary>
-        public string Created { get; set; }
-
-        /// <summary>
         /// 付款时间。格式:yyyy-MM-dd HH:mm:ss。订单的付款时间即为物流订单的创建时间。
         /// </summary>
         public DateTime? PayTime { get; set; }
-        /// <summary>
-        /// 交易修改时间(用户对订单的任何修改都会更新此字段)。格式:yyyy-MM-dd HH:mm:ss
-        /// </summary>
-        public string Modified { get; set; }
+        ///// <summary>
+        ///// 交易修改时间(用户对订单的任何修改都会更新此字段)。格式:yyyy-MM-dd HH:mm:ss
+        ///// </summary>
+        //public string Modified { get; set; }
 
         /// <summary>
         /// 交易结束时间。交易成功时间(更新交易状态为成功的同时更新)/确认收货时间或者交易关闭时间 。格式:yyyy-MM-dd HH:mm:ss
@@ -244,16 +224,10 @@ namespace OrderPullService
         /// </summary>
         public string Source { get; set; }
 
-        public bool? EnabledMark { get; set; }
-        public string Description { get; set; }
+        //public bool? EnabledMark { get; set; }
+        //public string Description { get; set; }
 
-        public int? SortCode { get; set; }
-
-        /// <summary>
-        /// 返回的报文
-        /// </summary>
-        public string ReponseData { get; set; }
-
+        //public int? SortCode { get; set; }
 
         /// <summary>
         /// 时效服务身份，如tmallPromise代表天猫时效承诺
@@ -307,12 +281,10 @@ namespace OrderPullService
         /// </summary>
         public string GmtReceived { get; set; }
 
-
         /// <summary>
         /// 快递费用的佣金比例
         /// </summary>
         public string EscrowFeeEpxressRate { get; set; }
-
 
 
         /// <summary>
@@ -452,8 +424,21 @@ namespace OrderPullService
         /// </summary>
         public string RefundType { get; set; }
 
-        public string CancelRequestReason { get; set; }
-
+        /// <summary>
+        /// 交易明细
+        /// </summary>
         public virtual IList<TradeDetail> Details { get; set; }
+        /// <summary>
+        /// 交易优惠信息
+        /// </summary>
+        public virtual IList<TradePromotion> PromotionDetails { get; set; }
+
+        public Guid? TenantId {get;set;}
+
+        public void SetId(Guid id)
+        {
+            Id = id;
+        }
+
     }
 }

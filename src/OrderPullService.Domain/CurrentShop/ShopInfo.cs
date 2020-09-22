@@ -38,6 +38,7 @@ namespace OrderPullService.CurrentShop
         public string AppSecret { get; set; }
 
         public string AppSessionKey { get; set; }
+        public Guid? TenantId { get; set; }
         /// <summary>
         /// 扩展属性
         /// </summary>

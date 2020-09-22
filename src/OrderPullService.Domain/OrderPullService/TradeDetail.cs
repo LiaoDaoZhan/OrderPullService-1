@@ -6,7 +6,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace OrderPullService
 {
-    public class TradeDetail : FullAuditedAggregateRoot<Guid>
+    public class TradeDetail : FullAuditedAggregateRoot<Guid>, Volo.Abp.MultiTenancy.IMultiTenant
     {
         /// <summary>
         /// 主订单ID
@@ -45,14 +45,14 @@ namespace OrderPullService
         /// 商家外部编码(可与商家外部系统对接)。外部商家自己定义的商品Item的id，可以通过taobao.items.custom.get获取商品的Item的信息
         /// </summary>
         public string OutId { get; set; }
-        /// <summary>
-        /// 订单快照URL
-        /// </summary>
-        public string SnapshotUrl { get; set; }
-        /// <summary>
-        /// 订单快照详细信息
-        /// </summary>
-        public string Snapshot { get; set; }
+        ///// <summary>
+        ///// 订单快照URL
+        ///// </summary>
+        //public string SnapshotUrl { get; set; }
+        ///// <summary>
+        ///// 订单快照详细信息
+        ///// </summary>
+        //public string Snapshot { get; set; }
         /// <summary>
         /// 订单超时到期时间。格式:yyyy-MM-dd HH:mm:ss
         /// </summary>
@@ -72,7 +72,7 @@ namespace OrderPullService
         /// <summary>
         /// 订单状态（请关注此状态，如果为TRADE_CLOSED_BY_TAOBAO状态，则不要对此订单进行发货，切记啊！）。可选值:TRADE_NO_CREATE_PAY(没有创建支付宝交易) WAIT_BUYER_PAY(等待买家付款) WAIT_SELLER_SEND_GOODS(等待卖家发货, 即:买家已付款) WAIT_BUYER_CONFIRM_GOODS(等待买家确认收货, 即:卖家已发货) TRADE_BUYER_SIGNED(买家已签收, 货到付款专用) TRADE_FINISHED(交易成功) TRADE_CLOSED(付款以后用户退款成功，交易自动关闭) TRADE_CLOSED_BY_TAOBAO(付款以前，卖家或买家主动关闭交易)PAY_PENDING(国际信用卡支付付款确认中)
         /// </summary>
-        public string Status { get; set; }
+        public TradeStatus Status { get; set; }
 
         public int? StateNum { get; set; }
 
@@ -89,11 +89,16 @@ namespace OrderPullService
         /// </summary>
         public string Price { get; set; }
 
+        public void SetId(Guid id)
+        {
+            Id = id;
+        }
+
         /// <summary>
         /// 发货方式
         /// smt:发货类型"SELLER_SEND_GOODS": 卖家发货; "WAREHOUSE_SEND_GOODS":仓库发货
         /// </summary>
-        public string is_sh_ship { get; set; }
+        public string IsShShip { get; set; }
 
         /// <summary>
         /// 商品数字ID
@@ -110,7 +115,7 @@ namespace OrderPullService
         /// <summary>
         /// 购买数量。取值范围:大于零的整数
         /// </summary>
-        public string Num { get; set; }
+        public long Num { get; set; }
         /// <summary>
         /// 外部网店自己定义的Sku编号
         /// </summary>
@@ -122,19 +127,19 @@ namespace OrderPullService
         /// <summary>
         /// 应付金额（商品价格 * 商品数量 + 手工调整金额 - 子订单级订单优惠金额）。精确到2位小数;单位:元。如:200.07，表示:200元7分
         /// </summary>
-        public string TotalFee { get; set; }
+        public decimal TotalFee { get; set; }
         /// <summary>
         /// 子订单实付金额。精确到2位小数，单位:元。如:200.07，表示:200元7分。对于多子订单的交易，计算公式如下：payment = price * num + adjust_fee - discount_fee ；单子订单交易，payment与主订单的payment一致，对于退款成功的子订单，由于主订单的优惠分摊金额，会造成该字段可能不为0.00元。建议使用退款前的实付金额减去退款单中的实际退款金额计算。
         /// </summary>
-        public string Payment { get; set; }
+        public decimal Payment { get; set; }
         /// <summary>
         /// 子订单级订单优惠金额。精确到2位小数;单位:元。如:200.07，表示:200元7分
         /// </summary>
-        public string DiscountFee { get; set; }
+        public decimal DiscountFee { get; set; }
         /// <summary>
         /// 手工调整金额.格式为:1.01;单位:元;精确到小数点后两位.
         /// </summary>
-        public string AdjustFee { get; set; }
+        public decimal AdjustFee { get; set; }
         ///// <summary>
         ///// 订单修改时间，目前只有taobao.trade.ordersku.update会返回此字段。
         ///// </summary>
@@ -146,25 +151,25 @@ namespace OrderPullService
         /// <summary>
         /// 子订单的交易结束时间说明：子订单有单独的结束时间，与主订单的结束时间可能有所不同，在有退款发起的时候或者是主订单分阶段付款的时候，子订单的结束时间会早于主订单的结束时间，所以开放这个字段便于订单结束状态的判断
         /// </summary>
-        public string EndTime { get; set; }
+        public DateTime EndTime { get; set; }
 
 
     
-        public bool? EnabledMark { get; set; }
-        public string Description { get; set; }
-        public int? SortCode { get; set; }
+        //public bool? EnabledMark { get; set; }
+        //public string Description { get; set; }
+        //public int? SortCode { get; set; }
 
 
         //=========2019-10-31 LDZ  smt============
         /// <summary>
         /// 优惠金额
         /// </summary>
-        public string Discount { get; set; }
+        public decimal? Discount { get; set; }
 
         /// <summary>
         /// 销售单价
         /// </summary>
-        public string oPrice { get; set; }
+        public decimal oPrice { get; set; }
 
         /// <summary>
         /// 佣金比例
@@ -174,7 +179,7 @@ namespace OrderPullService
         /// <summary>
         /// 佣金
         /// </summary>
-        public string EscrowFee { get; set; }
+        public decimal? EscrowFee { get; set; }
 
         /// <summary>
         /// 联盟佣金比例
@@ -211,7 +216,12 @@ namespace OrderPullService
         /// 订单操作费
         /// </summary>
         public decimal? OrdeActionAmount { get; set; }
-
+        /// <summary>
+        /// 付款时间
+        /// </summary>
         public DateTime? PayTime { get; set; }
+
+        public Guid? TenantId { get; set; }
+        public Guid ShopId { get; set; }
     }
 }

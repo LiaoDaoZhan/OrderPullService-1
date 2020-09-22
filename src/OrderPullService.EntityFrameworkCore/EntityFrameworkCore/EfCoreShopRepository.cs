@@ -38,7 +38,7 @@ namespace OrderPullService.EntityFrameworkCore
                 return null;
 
             var shopInfo= new ShopInfo(shop.Id, shop.Name,shop.ShopPlatformType, shop.Platform.AppKey, shop.Platform.AppSecret, shop.Platform.SessionKey);
-            
+            shopInfo.TenantId = shop.TenantId;
             return shopInfo;
         }
     }

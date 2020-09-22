@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 
 namespace OrderPullService
@@ -16,7 +17,8 @@ namespace OrderPullService
     /// <summary>
     /// 京东交易类订单
     /// </summary>
-    public class JdTradeOrderAppService : OrderPullServiceAppService, ITradeOrderAppService
+    [RemoteService(IsEnabled = false, IsMetadataEnabled = false)]//禁用api方式访问
+    public class JDTradeOrderService : OrderPullServiceAppService, IPullTradeOrderService
     {
         public async Task<OrderTradeOutput> GetAsync(string id)
         {

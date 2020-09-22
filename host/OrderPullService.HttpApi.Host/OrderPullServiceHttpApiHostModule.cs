@@ -32,6 +32,7 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.Security.Claims;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.AspNetCore.Mvc;
 
 namespace OrderPullService
 {
@@ -123,6 +124,12 @@ namespace OrderPullService
                     .AddDataProtection()
                     .PersistKeysToStackExchangeRedis(redis, "OrderPullService-Protection-Keys");
             }
+
+            Configure<AbpAspNetCoreMvcOptions>(options => {
+                options.ConventionalControllers.Create(typeof(OrderPullServiceApplicationModule).Assembly, opts => {
+                    opts.RootPath = "OrderPull";
+                });
+            });
 
             context.Services.AddCors(options =>
             {

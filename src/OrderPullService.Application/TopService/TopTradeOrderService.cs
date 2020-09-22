@@ -17,7 +17,7 @@ namespace OrderPullService.TopService
     /// 淘宝类交易订单
     /// </summary>
     [RemoteService(IsEnabled = false, IsMetadataEnabled = false)]//禁用api方式访问
-    public class TopTradeOrderAppService : OrderPullServiceAppService, ITradeOrderAppService
+    public class TopTradeOrderService : OrderPullServiceAppService, IPullTradeOrderService
     {
         //private ICurrentShop CurrentShop { get; set; }
         /// <summary>
@@ -35,7 +35,7 @@ namespace OrderPullService.TopService
             TradesSoldIncrementGetResponse rsp = client.Execute(req, CurrentShop.AppSessionKey);
             //return rsp;
 
-            var result = new PagedResultDto<OrderTradeGetListOutput>(rsp.TotalResults, ObjectMapper.Map<IReadOnlyList<Top.Api.Domain.Trade>, List<OrderTradeGetListOutput>>(rsp.Trades));
+            var result = new PagedResultDto<OrderTradeGetListOutput>(rsp.TotalResults, ObjectMapper.Map<List<Top.Api.Domain.Trade>, List<OrderTradeGetListOutput>>(rsp.Trades));
             return result;
         }
         /// <summary>
@@ -45,14 +45,27 @@ namespace OrderPullService.TopService
         /// <returns></returns>
         public async Task<OrderTradeOutput> GetAsync(string id)
         {
+            return ObjectMapper.Map<Trade, OrderTradeOutput>(await GetTradeAsync(id) );
+        }
+
+        /// <summary>
+        /// 获取订单交易明细
+        /// </summary>
+        /// <param name="id">订单明细ID(长数字类型)</param>
+        /// <returns></returns>
+        public async Task<Trade> GetTradeAsync(string id)
+        {
             ITopClient client = new DefaultTopClient(CurrentShop.ApiUrl, CurrentShop.AppKey, CurrentShop.AppSecret);
             TradeFullinfoGetRequest req = new TradeFullinfoGetRequest();
-            req.Tid = Convert.ToInt64(id);
-            //ObjectMapper.Map<OrderTradeGetInput, TradeFullinfoGetRequest>(id);
+
+            ObjectMapper.Map<OrderTradeGetInput, TradeFullinfoGetRequest>(new OrderTradeGetInput() { Id = id }, req);
+
             TradeFullinfoGetResponse rsp = client.Execute(req, CurrentShop.AppSessionKey);
-            var result = ObjectMapper.Map<Top.Api.Domain.Trade, OrderTradeOutput>(rsp.Trade);
+            var result = ObjectMapper.Map<Top.Api.Domain.Trade, Trade>(rsp.Trade);
             return result;
         }
+
+
         /// <summary>
         /// 订单发货
         /// </summary>

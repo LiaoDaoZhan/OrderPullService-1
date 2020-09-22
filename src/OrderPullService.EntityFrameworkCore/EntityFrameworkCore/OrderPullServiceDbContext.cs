@@ -23,6 +23,8 @@ namespace OrderPullService.EntityFrameworkCore
 
         public DbSet<TradeDetail> TradeDetails { get; set; }
 
+        public DbSet<TradePromotion> TradePromotions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

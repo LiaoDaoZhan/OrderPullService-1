@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Volo.Abp.Application.Services;
 
 namespace OrderPullService
 {
     /// <summary>
-    /// 店铺管理
+    /// 交易处理状态
     /// </summary>
-    public interface IShopAppSerivce : IApplicationService
+    public enum TradeProcessingStatus
     {
 
     }
