@@ -49,6 +49,11 @@ namespace OrderPullService
             var rspresponse = client.Execute(req, CurrentShop.AppSessionKey, DateTime.Now.ToLocalTime());
 
         }
+
+        public Task<Trade> GetTradeAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
         //public Task<OrderTradeOutput> GetAsync(string id)
         //{
         //    throw new NotImplementedException();

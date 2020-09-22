@@ -27,10 +27,10 @@
 
   <ItemGroup>
     <Reference Include="jos-sdk-net">
-      <HintPath>bin\jos-sdk-net.dll</HintPath>
+      <HintPath>..\..\dll\jos-sdk-net.dll</HintPath>
     </Reference>
     <Reference Include="LazopSdk">
-      <HintPath>bin\LazopSdk.dll</HintPath>
+      <HintPath>..\..\dll\LazopSdk.dll</HintPath>
     </Reference>
     <Reference Include="topsdk-net-core">
       <HintPath>..\..\dll\topsdk-net-core.dll</HintPath>
