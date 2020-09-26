@@ -1,4 +1,5 @@
-﻿using OrderPullService.Deliver.Dto;
+﻿using OrderPullService.Deliver;
+using OrderPullService.Deliver.Dto;
 using OrderPullService.TradeOrder;
 using OrderPullService.TradeOrder.Dto;
 using System;
@@ -17,7 +18,7 @@ namespace OrderPullService.TopService
     /// 淘宝类交易订单
     /// </summary>
     [RemoteService(IsEnabled = false, IsMetadataEnabled = false)]//禁用api方式访问
-    public class TopTradeOrderService : OrderPullServiceAppService, IPullTradeOrderService
+    public class TopTradeOrderService : OrderPullServiceAppService, IPullTradeOrderService, ITradeDeliverAppService
     {
         //private ICurrentShop CurrentShop { get; set; }
         /// <summary>

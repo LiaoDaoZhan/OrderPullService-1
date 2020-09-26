@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
 
@@ -26,11 +26,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="api-sdk">
+      <HintPath>..\..\dll\api-sdk.dll</HintPath>
+      <Aliases>snSDK</Aliases>
+    </Reference>
     <Reference Include="jos-sdk-net">
       <HintPath>..\..\dll\jos-sdk-net.dll</HintPath>
     </Reference>
     <Reference Include="LazopSdk">
       <HintPath>..\..\dll\LazopSdk.dll</HintPath>
+    </Reference>
+    <Reference Include="Osp sdk">
+      <HintPath>..\..\dll\Osp sdk.dll</HintPath>
     </Reference>
     <Reference Include="topsdk-net-core">
       <HintPath>..\..\dll\topsdk-net-core.dll</HintPath>

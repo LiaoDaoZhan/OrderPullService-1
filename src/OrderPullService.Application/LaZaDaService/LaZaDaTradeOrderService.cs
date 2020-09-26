@@ -46,8 +46,8 @@ namespace OrderPullService.LaZaDaService
             request.AddApiParameter("created_before", input.StartTime.ToString("yyyy-MM-ddTHH:mm:ssZ"));
             request.AddApiParameter("created_after", input.EndTime.ToString("yyyy-MM-ddTHH:mm:ssZ"));
             request.AddApiParameter("status", input.Status);
-            //request.AddApiParameter("limit", pageSize.ToString()); //页大小
-            //request.AddApiParameter("offset", ((pageNo - 1) * pageSize).ToString()); //跳过条数
+            request.AddApiParameter("limit", input.PageSize.ToString()); //页大小
+            request.AddApiParameter("offset", ((input.PageNo - 1) * input.PageSize).ToString()); //跳过条数
             request.AddApiParameter("sort_by", "created_at");
             LazopResponse rsp = client.Execute(request, CurrentShop.AppSessionKey);
             if (rsp.Code != "0")

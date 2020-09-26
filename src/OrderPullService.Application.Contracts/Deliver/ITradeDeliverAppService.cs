@@ -16,6 +16,6 @@ namespace OrderPullService.Deliver
         /// 创建发货信息并推送至指定的平台
         /// </summary>
         /// <returns></returns>
-        Task CreateAsync(TradeOrderDeliverInput input);
+        Task DeliverAsync(TradeOrderDeliverInput input);
     }
 }
