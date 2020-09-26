@@ -26,10 +26,10 @@ namespace OrderPullService.TradeOrder.Dto
         ///// <summary>
         ///// 页码
         ///// </summary>
-        //public int PageNo { get; set; }
+        public int PageNo { get; set; }
         ///// <summary>
         ///// 最大返回数量
         ///// </summary>
-        //public int PageSize { get; set; }
+        public int PageSize { get; set; }
     }
 }
