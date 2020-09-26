@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OrderPullService.Shop.Dto
+namespace OrderPullService.Dto
 {
-    public class ShopGetListInput
+    public class ShopCreateInput
     {
 
     }

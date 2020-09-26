@@ -13,8 +13,7 @@ using Volo.Abp.Application.Dtos;
 namespace OrderPullService.LaZaDaService
 {
     [RemoteService(IsEnabled = false, IsMetadataEnabled = false)]//禁用api方式访问
-
-    public class LaZaDaTradeOrderAppService : OrderPullServiceAppService, ITradeOrderAppService
+    public class LaZaDaTradeOrderService : OrderPullServiceAppService, IPullTradeOrderService
     {
         /// <summary>
         /// 获取单条订单详情
@@ -68,6 +67,11 @@ namespace OrderPullService.LaZaDaService
             request.SetApiName("/order/sof/delivered");
             request.AddApiParameter("order_item_ids", "[" + input.OrderId + "]");
             LazopResponse response = client.Execute(request, CurrentShop.AppSessionKey);
+        }
+
+        public Task<Trade> GetTradeAsync(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

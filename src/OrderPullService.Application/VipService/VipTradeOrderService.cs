@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 
-namespace OrderPullService.SmtService
+namespace OrderPullService.VipService
 {
+    /// <summary>
+    /// 唯品汇
+    /// </summary>
     [RemoteService(IsEnabled = false, IsMetadataEnabled = false)]//禁用api方式访问
-    public class SmtTradeOrderAppService : OrderPullServiceAppService, ITradeOrderAppService
+    public class VipTradeOrderService : OrderPullServiceAppService, IPullTradeOrderService
     {
         public Task<OrderTradeOutput> GetAsync(string id)
         {
@@ -18,6 +21,11 @@ namespace OrderPullService.SmtService
         }
 
         public Task<PagedResultDto<OrderTradeGetListOutput>> GetListAsync(TradeOrderGetListInput input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Trade> GetTradeAsync(string id)
         {
             throw new NotImplementedException();
         }

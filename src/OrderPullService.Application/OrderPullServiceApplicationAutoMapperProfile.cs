@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using OrderPullService.Deliver.Dto;
 using OrderPullService.TradeOrder.Dto;
+using System;
+using Top.Api.Request;
 
 namespace OrderPullService
 {
@@ -11,39 +13,6 @@ namespace OrderPullService
             /* You can configure your AutoMapper mapping configuration here.
              * Alternatively, you can split your mapping configurations
              * into multiple profile classes for a better organization. */
-
-            #region 淘宝类订单
-            //获取增量交易列表 传值
-            //CreateMap<TradeOrderGetListInput, TradesSoldIncrementGetRequest>(MemberList.None)
-            //    .ForMember(c => c.StartModified, c => c.MapFrom(d => d.StartTime))
-            //    .ForMember(c => c.EndModified, c => c.MapFrom(d => d.EndTime))
-            //    .AfterMap((input, request) =>
-            //    {
-            //        request.Fields = "tid";
-            //        //request.PageNo =int.Parse(Math.Round((input.Skip/input.MaxResultCount),0));
-            //        //request.PageSize = input.PageSize;
-            //        ///是否存在下一页
-            //        request.UseHasNext = true;
-            //    });
-            //获取订单交易明细
-            //CreateMap<OrderTradeGetInput, TradeFullinfoGetRequest>(MemberList.None)
-            //    .ForMember(c => c.Tid, c => c.MapFrom(d => long.Parse(d.OrderId)))
-            //    .AfterMap((input, request) =>
-            //    {
-            //        request.Fields = "tid,type,status,payment,orders,promotion_details";
-            //    });
-
-
-            //CreateMap<TradeOrderDeliverInput, LogisticsOnlineSendRequest>(MemberList.None)
-            //    .ForMember(c => c.Tid, c => c.MapFrom(d => long.Parse(d.OrderId)))
-            //    .ForMember(c => c.OutSid, c => c.MapFrom(d => d.LogiNo))
-            //    .ForMember(c => c.IsSplit, c => c.Ignore())
-            //    .AfterMap((input, request) =>
-            //    {
-            //        if (input.IsSplit) request.IsSplit = 1L;
-            //        else request.IsSplit = 0L;
-            //    });
-            #endregion
 
             #region 京东类订单
             //CreateMap<TradeOrderGetListInput, PopOrderSearchRequest>(MemberList.None)

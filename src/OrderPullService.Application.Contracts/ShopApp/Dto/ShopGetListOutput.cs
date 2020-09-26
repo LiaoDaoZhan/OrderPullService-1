@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Volo.Abp.Application.Dtos;
 
-namespace OrderPullService.Shop.Dto
+namespace OrderPullService.Dto
 {
-    public class ShopGetListOutput:ShopCreateInput
+    public class ShopGetListOutput: EntityDto<Guid>
     {
 
     }

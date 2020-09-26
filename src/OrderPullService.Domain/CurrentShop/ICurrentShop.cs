@@ -18,6 +18,10 @@ namespace OrderPullService.CurrentShop
         /// </summary>
         public string Name { get; }
         /// <summary>
+        /// 店铺平台
+        /// </summary>
+        public ShopPlatformType Platform { get; }
+        /// <summary>
         /// 当前店铺Key信息
         /// </summary>
         public string AppKey { get; }
@@ -40,7 +44,7 @@ namespace OrderPullService.CurrentShop
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public IDisposable ChangeAsync(Guid id);
+        public IDisposable Change(Guid id);
         /// <summary>
         /// 更改店铺信息
         /// </summary>

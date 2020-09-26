@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 
 namespace OrderPullService
@@ -16,7 +17,8 @@ namespace OrderPullService
     /// <summary>
     /// 京东交易类订单
     /// </summary>
-    public class JdTradeOrderAppService : OrderPullServiceAppService, ITradeOrderAppService
+    [RemoteService(IsEnabled = false, IsMetadataEnabled = false)]//禁用api方式访问
+    public class JDTradeOrderService : OrderPullServiceAppService, IPullTradeOrderService
     {
         public async Task<OrderTradeOutput> GetAsync(string id)
         {
@@ -46,6 +48,11 @@ namespace OrderPullService
             //物流公司ID(只可通过获取商家物流公司接口获得),多个物流公司以|分隔。如：2100|4700。请注意：如果填写厂家自送（1274），则不会保存物流单号，也不会有具体的跟踪信息。
             var rspresponse = client.Execute(req, CurrentShop.AppSessionKey, DateTime.Now.ToLocalTime());
 
+        }
+
+        public Task<Trade> GetTradeAsync(string id)
+        {
+            throw new NotImplementedException();
         }
         //public Task<OrderTradeOutput> GetAsync(string id)
         //{

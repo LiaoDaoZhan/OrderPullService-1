@@ -112,6 +112,9 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     b.Property<int>("ShopPlatformType")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.ToTable("OrderPullServiceShops");
@@ -153,9 +156,6 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     b.Property<bool>("BuyerRate")
                         .HasColumnType("bit");
 
-                    b.Property<string>("CancelRequestReason")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnName("ConcurrencyStamp")
@@ -163,9 +163,6 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                         .HasMaxLength(40);
 
                     b.Property<string>("ConsignTime")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Created")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreationTime")
@@ -192,12 +189,6 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
 
                     b.Property<int>("DeliveryWarehouse")
                         .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("EnabledMark")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("EndTime")
                         .HasColumnType("datetime2");
@@ -283,9 +274,6 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     b.Property<string>("Mailno")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Modified")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal?>("OrdeActionAmount")
                         .HasColumnType("decimal(18,2)");
 
@@ -304,14 +292,11 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     b.Property<string>("Payment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PicPath")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PostFee")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Price")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ProcessingStatus")
+                        .HasColumnType("int");
 
                     b.Property<string>("PromiseService")
                         .HasColumnType("nvarchar(max)");
@@ -373,12 +358,6 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     b.Property<string>("RefundType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ReponseData")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SellStates")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("SellerFlag")
                         .HasColumnType("nvarchar(max)");
 
@@ -397,20 +376,18 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     b.Property<Guid>("ShopId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("SortCode")
-                        .HasColumnType("int");
-
                     b.Property<string>("Source")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("StateNum")
                         .HasColumnType("int");
 
-                    b.Property<string>("Statu_CN")
+                    b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Tid")
                         .HasColumnType("nvarchar(max)");
@@ -419,9 +396,6 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TotalFee")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TradeFrom")
@@ -444,8 +418,8 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AdjustFee")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("AdjustFee")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal?>("AfflicateFee")
                         .HasColumnType("decimal(18,2)");
@@ -490,23 +464,17 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                         .HasColumnName("DeletionTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal?>("Discount")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Discount")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("DiscountFee")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("DiscountFee")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
 
-                    b.Property<bool?>("EnabledMark")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("EndTime")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EscrowFee")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal?>("EscrowFee")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("EscrowFeeRate")
                         .HasColumnType("nvarchar(max)");
@@ -520,6 +488,9 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                         .HasColumnName("IsDeleted")
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
+
+                    b.Property<string>("IsShShip")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ItemMealId")
                         .HasColumnType("nvarchar(max)");
@@ -538,8 +509,8 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     b.Property<decimal?>("MailNoAmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Num")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("Num")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("NumId")
                         .HasColumnType("nvarchar(max)");
@@ -565,8 +536,8 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     b.Property<DateTime?>("PayTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Payment")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("Payment")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("PicPath")
                         .HasColumnType("nvarchar(max)");
@@ -583,26 +554,24 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     b.Property<bool>("SellerRate")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("ShopId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("SkuId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SkuPropertiesName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Snapshot")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SnapshotUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("SortCode")
-                        .HasColumnType("int");
-
                     b.Property<int?>("StateNum")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("TimeoutActionTim")
                         .HasColumnType("nvarchar(max)");
@@ -610,8 +579,8 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TotalFee")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("TotalFee")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("TradeId")
                         .HasColumnType("uniqueidentifier");
@@ -628,17 +597,70 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     b.Property<decimal?>("YJCost")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("is_sh_ship")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("oPrice")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("oPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TradeId");
 
                     b.ToTable("OrderPullServiceTradeDetails");
+                });
+
+            modelBuilder.Entity("OrderPullService.TradePromotion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnName("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(40);
+
+                    b.Property<string>("DiscountFee")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnName("ExtraProperties")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GiftItemId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GiftItemName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GiftItemNum")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PromotionDesc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PromotionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PromotionName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ShopId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TardeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("TradeOriId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TardeId");
+
+                    b.ToTable("OrderPullServiceTradePromotions");
                 });
 
             modelBuilder.Entity("OrderPullService.Shop", b =>
@@ -720,6 +742,15 @@ namespace OrderPullService.EntityFrameworkCore.DbMigrations.Migrations
                     b.HasOne("OrderPullService.Trade", "Trade")
                         .WithMany("Details")
                         .HasForeignKey("TradeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("OrderPullService.TradePromotion", b =>
+                {
+                    b.HasOne("OrderPullService.Trade", "Trade")
+                        .WithMany("PromotionDetails")
+                        .HasForeignKey("TardeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

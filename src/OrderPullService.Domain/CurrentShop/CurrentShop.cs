@@ -14,9 +14,10 @@ namespace OrderPullService.CurrentShop
     {
         protected IShopRepository ShopRepository { get; }
 
-        public CurrentShop(IShopRepository shopRepository)
+        public CurrentShop(IShopRepository shopRepository, ICurrentShopAccessor currentShopAccessor)
         {
             ShopRepository = shopRepository;
+            _currentShopAccessor = currentShopAccessor;
         }
 
 #if SANBOX
@@ -40,16 +41,15 @@ namespace OrderPullService.CurrentShop
 
         public string AppSessionKey => _currentShopAccessor.Current.AppSessionKey;
 
+        public Guid? TenantId => _currentShopAccessor.Current.TenantId;
+
         public virtual Guid Id => _currentShopAccessor.Current.Id;
 
         private readonly ICurrentShopAccessor _currentShopAccessor;
 
-        public CurrentShop(ICurrentShopAccessor currentShopAccessor)
-        {
-            _currentShopAccessor = currentShopAccessor;
-        }
+       
 
-        public IDisposable ChangeAsync(Guid id)
+        public IDisposable Change(Guid id)
         {
             //获取新的店铺key和秘钥
             var parentScope = _currentShopAccessor.Current;
